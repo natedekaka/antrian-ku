@@ -44,6 +44,26 @@ $logoPath = $settings['logo_path'];
             <?php endforeach; ?>
         </div>
 
+        <!-- Modal Antrian -->
+        <div id="modal-antrian" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                </div>
+                <div class="modal-label">Nomor Antrian Anda</div>
+                <div id="queue-number-display" class="queue-number-display">---</div>
+                <div id="queue-category-name" class="modal-category"></div>
+                <div class="modal-message">Silakan menunggu dipanggil</div>
+                <div id="modal-time" class="modal-time"></div>
+                <button id="btn-cetak-tiket" class="btn-cetak" data-code="" data-category="">Cetak Tiket</button>
+                <button class="btn-ambil-lagi">Ambil Antrian Lagi</button>
+            </div>
+        </div>
+
         <div class="app-footer">by natedekaka</div>
     </div>
 
