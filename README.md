@@ -263,28 +263,92 @@ DB_PASS=antrianpass
 
 ## Penggunaan
 
-### User (Ambil Nomor)
+### User — Ambil Nomor
 
-1. Buka `http://localhost:8085/`
-2. Pilih kategori layanan
-3. Dapatkan nomor antrian (bisa cetak tiket)
-4. Tunggu dipanggil di layar display
+Akses via HP atau laptop: buka `http://localhost:8085/`
 
-### Petugas (Panel Admin)
+**Langkah-langkah:**
 
-1. Buka `http://localhost:8085/admin`
-2. Pilih loket
-3. Klik **PANGGIL** untuk memanggil antrian berikutnya
-4. **PANGGIL ULANG** untuk memanggil ulang
-5. **SKIP** untuk melewatkan
-6. **SELESAI** untuk menandai selesai
+1. **Pilih Kategori** — Tap tombol kategori layanan yang diinginkan (contoh: Pendaftaran)
+2. **Lihat Nomor** — Modal akan muncul dengan nomor antrian Anda
+3. **Cetak Tiket (opsional)** — Klik **Cetak Tiket** untuk mencetak nomor antrian
+   - Sebelum mencetak, pilih **ukuran kertas** yang sesuai:
+     - **58 mm** — Untuk printer thermal portable / HP (default)
+     - **80 mm** — Untuk printer thermal ukuran standar (Epson TM-T82, dll.)
+   - Print dialog browser akan terbuka → pilih printer thermal → **Print**
+   - Jika logo sudah diupload di halaman Profil, logo akan muncul otomatis di tiket
+4. **Ambil Lagi** — Klik **Ambil Antrian Lagi** untuk kembali
+5. **Cek Estimasi** — Estimasi waktu tunggu muncul otomatis saat memilih kategori
+6. **Tunggu Panggilan** — Nomor akan dipanggil di layar display dan melalui suara (TTS)
 
-### Admin (Manajemen)
+> **Tips HP**: Pada print dialog Android, pilih ukuran kertas "58x150mm" atau "80x150mm" sesuai pilihan. Atur margin ke "Minimum" agar tiket tidak terpotong.
 
-- **Kategori** — Atur jenis layanan dan aktif/nonaktifkan
-- **Loket** — Tambah atau edit loket
-- **Laporan** — Lihat statistik harian, export CSV, bersihkan data
-- **Profil** — Ubah nama aplikasi dan upload logo
+### Petugas — Panel Admin
+
+Buka `http://localhost:8085/admin`
+
+**Langkah-langkah:**
+
+1. **Pilih Loket** — Klik loket yang sedang bertugas (Loket 1, Loket 2, dll.)
+2. **PANGGIL** — Memanggil antrian berikutnya (suara + beep akan aktif)
+3. **PANGGIL ULANG** — Memanggil ulang antrian yang sudah dipanggil
+4. **SKIP** — Melewatkan antrian (status berubah menjadi "Dilewati")
+5. **SELESAI** — Menandai antrian selesai dilayani
+
+> **Catatan**: Loket yang berbeda bisa memanggil antrian secara bersamaan. Antrian akan terisi otomatis dari yang paling lama menunggu.
+
+### Admin — Manajemen
+
+Buka menu admin yang tersedia:
+
+#### Kategori (`/admin/kategori`)
+
+| Aksi | Cara |
+|------|------|
+| **Tambah Kategori** | Klik **Tambah Kategori** → isi nama dan kode (contoh: BPJS) → Simpan |
+| **Edit Kategori** | Klik **Edit** pada baris kategori → ubah data → Simpan |
+| **Hapus Kategori** | Klik **Hapus** → konfirmasi |
+| **Aktif/Nonaktifkan** | Geser toggle switch untuk mengaktifkan atau menonaktifkan kategori |
+
+#### Loket (`/admin/loket`)
+
+| Aksi | Cara |
+|------|------|
+| **Tambah Loket** | Klik **Tambah Loket** → isi nama dan kode (contoh: Loket 1, kode: 1) → Simpan |
+| **Edit Loket** | Klik **Edit** → ubah data → Simpan |
+| **Hapus Loket** | Klik **Hapus** → konfirmasi |
+
+#### Laporan (`/admin/laporan`)
+
+- **Statistik Harian** — Total antrian, selesai, dipanggil, menunggu, dilewati
+- **Rekap Per Kategori** — Rincian per kategori layanan
+- **Antrian Terakhir** — 20 antrian terbaru dengan status
+- **Export CSV** — Download laporan dalam format CSV (buka di Excel)
+- **Bersihkan Data** — Hapus semua data antrian hari ini
+
+#### Profil (`/admin/profil`)
+
+- **Nama Aplikasi** — Ubah nama yang tampil di halaman utama dan tiket cetakan
+- **Logo** — Upload logo (format: PNG, JPG, GIF, SVG, WEBP, maks 2MB)
+  - Logo akan muncul di halaman ambil nomor dan tiket cetakan
+  - Klik **Hapus Logo** untuk menghapus
+
+### Cetak Tiket ke Printer Thermal
+
+Fitur cetak tiket mendukung printer thermal ukuran **58mm** dan **80mm**:
+
+1. **Pilih ukuran** di modal ambil nomor (58mm default untuk HP/portable)
+2. **Klik Cetak Tiket** → browser membuka print dialog
+3. Di print dialog:
+   - Pilih **printer thermal** yang terhubung (USB/Bluetooth)
+   - Ukuran kertas otomatis menyesuaikan pilihan (58mm atau 80mm)
+   - Atur margin ke **None** atau **Minimum**
+4. **Print** — Tiket akan tercetak dengan:
+   - Logo aplikasi (jika diupload)
+   - Nama aplikasi
+   - Nomor antrian (font besar dan tebal)
+   - Nama kategori
+   - Tanggal dan jam ambil
 
 ## Troubleshooting
 
