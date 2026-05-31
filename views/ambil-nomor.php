@@ -59,7 +59,12 @@ $logoPath = $settings['logo_path'];
                 <div id="queue-category-name" class="modal-category"></div>
                 <div class="modal-message">Silakan menunggu dipanggil</div>
                 <div id="modal-time" class="modal-time"></div>
-                <button id="btn-cetak-tiket" class="btn-cetak" data-code="" data-category="">Cetak Tiket</button>
+                <button id="btn-cetak-tiket" class="btn-cetak" data-code="" data-category="" data-app-name="<?php echo htmlspecialchars($appName); ?>" data-logo="<?php echo htmlspecialchars($logoPath); ?>">Cetak Tiket</button>
+                <div class="ticket-size-select">
+                    <span>Ukuran kertas:</span>
+                    <button class="size-btn active" data-size="58">58 mm</button>
+                    <button class="size-btn" data-size="80">80 mm</button>
+                </div>
                 <button class="btn-ambil-lagi">Ambil Antrian Lagi</button>
             </div>
         </div>

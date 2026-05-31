@@ -79,14 +79,32 @@ function speakWithBeep(queueCode, categoryName, counterName) {
     setTimeout(function() { speakQueue(queueCode, categoryName, counterName); }, 350);
 }
 
-function printTicket(queueCode, categoryName) {
+function printTicket(queueCode, categoryName, appName, logoPath, paperSize) {
     const now = new Date();
     const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
     const dateStr = now.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Inject @page for paper size
+    var pageStyle = document.getElementById('ticket-page-style');
+    if (!pageStyle) {
+        pageStyle = document.createElement('style');
+        pageStyle.id = 'ticket-page-style';
+        document.head.appendChild(pageStyle);
+    }
+    pageStyle.textContent = '@page { size: ' + paperSize + 'mm 150mm; margin: 2mm; }';
+
     const printArea = document.createElement('div');
     printArea.id = 'ticket-print-area';
+    printArea.className = 'ticket-' + paperSize + 'mm';
+
+    var logoHtml = '';
+    if (logoPath) {
+        logoHtml = '<img src="' + logoPath + '" class="ticket-logo" alt="Logo">';
+    }
+
     printArea.innerHTML =
-        '<div class="ticket-title">SISTEM ANTRIAN</div>' +
+        logoHtml +
+        '<div class="ticket-title">' + appName + '</div>' +
         '<div class="ticket-divider"></div>' +
         '<div class="ticket-number">' + queueCode + '</div>' +
         '<div class="ticket-category">' + categoryName + '</div>' +
@@ -94,7 +112,7 @@ function printTicket(queueCode, categoryName) {
         '<div class="ticket-time">' + dateStr + '</div>' +
         '<div class="ticket-time">' + timeStr + '</div>' +
         '<div class="ticket-divider"></div>' +
-        '<div class="ticket-time">Silakan menunggu dipanggil</div>';
+        '<div class="ticket-message">Silakan menunggu dipanggil</div>';
     document.body.appendChild(printArea);
     window.print();
     setTimeout(function() { printArea.remove(); }, 1000);
@@ -174,7 +192,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('btn-cetak-tiket')?.addEventListener('click', function() {
             const code = this.getAttribute('data-code');
             const cat = this.getAttribute('data-category');
-            if (code) printTicket(code, cat);
+            const appName = this.getAttribute('data-app-name') || 'SISTEM ANTRIAN';
+            const logoPath = this.getAttribute('data-logo') || '';
+            const paperSize = document.querySelector('.size-btn.active')?.getAttribute('data-size') || '80';
+            if (code) printTicket(code, cat, appName, logoPath, paperSize);
+        });
+
+        // Paper size toggle
+        document.querySelectorAll('.size-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.size-btn').forEach(function(b) { b.classList.remove('active'); });
+                this.classList.add('active');
+            });
         });
     }
 
